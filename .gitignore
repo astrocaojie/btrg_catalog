@@ -1,0 +1,34 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pyo
+*.swp
+*.swo
+
+# notebooks and temporary files
+*.ipynb
+.nfs*
+
+# data products
+*.fits
+*.fit
+*.h5
+*.hdf5
+*.csv
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.pth
+*.pt
+weights_*
+
+# generated outputs
+slurm_out/
+alpha_out/
+oa_out/
+host_out_new/
+host_wise_out/
+source_crop_all/
+candidates/
+

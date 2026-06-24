@@ -1,0 +1,20 @@
+seed: 42
+img_root: /home/caojie/work/Galaxy-Morphology/bent_catalog/candidates/01_annot/images
+label_csv: /home/caojie/work/Galaxy-Morphology/bent_catalog/candidates/01_annot/labels_bent_binary.csv
+
+out_dir: /home/caojie/work/Galaxy-Morphology/bent_catalog/candidates/05_bent_cls
+
+# training
+epochs: 80
+batch_size: 64
+lr: 3e-4
+weight_decay: 1e-4
+val_frac: 0.2
+patience: 15
+
+# data rule
+drop_uncertain: true
+
+# inference on H5
+in_h5: /shared/main/caojie/meerkat/source_candidates.h5
+out_csv_h5: /home/caojie/work/Galaxy-Morphology/bent_catalog/candidates/05_bent_cls/bent_scores_from_h5.csv

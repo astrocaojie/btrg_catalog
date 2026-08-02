@@ -1,6 +1,6 @@
 # MeerKLASS Bent-Tail Radio Galaxy Catalog Workflow
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21760616.svg)](https://doi.org/10.5281/zenodo.21760616)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21760616.svg)](https://doi.org/10.5281/zenodo.21761008)
 
 This repository contains the core scripts, configuration files, and
 documentation used to construct and validate a MeerKLASS bent-tail radio

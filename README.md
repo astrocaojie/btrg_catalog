@@ -127,3 +127,23 @@ Some scripts assume local HPC paths and MeerKLASS data locations. Before running
 
 - This repository is a cleaned code snapshot of the BT catalog construction workflow.
 - Large data products and generated outputs remain outside version control by design.
+
+## Authors
+
+- Jie Cao, Guangzhou University
+
+## License
+
+This software is distributed under the MIT License. See the
+[LICENSE](LICENSE) file for details.
+
+## Citation
+
+If you use this software, please cite the archived version:
+
+Cao, J. (2026). *btrg_catalog: MeerKLASS Bent-Tail Radio Galaxy
+Catalog Construction Workflow* (Version 1.0.0). Zenodo.
+https://doi.org/10.5281/zenodo.21760616
+
+Citation metadata are also provided in the
+[CITATION.cff](CITATION.cff) file.

@@ -1,149 +1,191 @@
-# BT Radio Galaxy Catalog
+# MeerKLASS Bent-Tail Radio Galaxy Catalog Workflow
 
-This repository contains the core scripts, configs, and lightweight documentation used to build a MeerKLASS bent-tail radio galaxy catalog.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21760616.svg)](https://doi.org/10.5281/zenodo.21760616)
+
+This repository contains the core scripts, configuration files, and
+documentation used to construct and validate a MeerKLASS bent-tail radio
+galaxy catalog.
 
 ## Scope
 
-This repository stores:
+This repository includes:
 
-- source cutout generation scripts
-- morphology-based candidate selection scripts
-- BT/nonBT training and inference code
-- validation scripts for host finding, opening angle, and spectral index
-- configuration files and short workflow notes
+- source cutout generation scripts;
+- morphology-based candidate selection scripts;
+- BT/non-BT classifier training and inference code;
+- catalog assembly scripts;
+- host-identification and AllWISE cross-matching scripts;
+- opening-angle and spectral-index validation scripts;
+- configuration files and workflow documentation.
 
-This repository does not store:
+The following large or generated products are not included:
 
-- FITS mosaics
-- HDF5 cutout or candidate files
-- CSV result tables
-- PNG overlays
-- model checkpoints
-- exploratory notebooks
+- MeerKLASS FITS mosaics;
+- HDF5 cutout and candidate files;
+- output CSV and FITS catalog tables;
+- PNG images and overlays;
+- trained model checkpoints;
+- exploratory notebooks.
 
-These generated products are excluded in [.gitignore](/home/caojie/work/btrg_catalog/.gitignore).
+These generated products are excluded from version control through
+[`.gitignore`](.gitignore).
 
 ## Repository Layout
 
-- [cut_source.py](/home/caojie/work/btrg_catalog/cut_source.py)
-  Crop MeerKLASS FITS mosaics into island-centered HDF5 cutouts.
+- [`cut_source.py`](cut_source.py)  
+  Crops MeerKLASS FITS mosaics into island-centred HDF5 cutouts.
 
-- [make_candidates.py](/home/caojie/work/btrg_catalog/make_candidates.py)
-  Apply morphology-based preselection and build the candidate HDF5.
+- [`make_candidates.py`](make_candidates.py)  
+  Applies morphology-based preselection and creates the candidate HDF5 files.
 
-- [export_png.py](/home/caojie/work/btrg_catalog/export_png.py)
-  Export candidate cutouts to PNG for visual inspection and annotation.
+- [`export_png.py`](export_png.py)  
+  Exports candidate cutouts as PNG images for visual inspection and
+  annotation.
 
-- [select_demo.py](/home/caojie/work/btrg_catalog/select_demo.py)
-  Compute PNG features and prepare an annotation subset.
+- [`select_demo.py`](select_demo.py)  
+  Calculates image features and prepares a subset for manual annotation.
 
-- [out_catalog.py](/home/caojie/work/btrg_catalog/out_catalog.py)
-  Convert selected HDF5 groups back into a FITS-style catalog table.
+- [`out_catalog.py`](out_catalog.py)  
+  Converts selected HDF5 groups into a catalog table.
 
-- [wise-cross.py](/home/caojie/work/btrg_catalog/wise-cross.py)
-  Match host WISE identifiers to AllWISE and append infrared information.
+- [`wise-cross.py`](wise-cross.py)  
+  Cross-matches host WISE identifiers with AllWISE and appends infrared
+  photometry and quality information.
 
-- [bentcls](/home/caojie/work/btrg_catalog/bentcls)
-  BT/nonBT classifier training and inference code.
+- [`bentcls/`](bentcls/)  
+  Contains the BT/non-BT classifier training and inference code.
 
-- [configs](/home/caojie/work/btrg_catalog/configs)
-  Default configuration for BT classifier training and inference.
+- [`configs/`](configs/)  
+  Contains configuration files for classifier training and inference.
 
-- [val](/home/caojie/work/btrg_catalog/val)
-  Validation scripts for host finding, opening angle, and spectral index.
+- [`val/`](val/)  
+  Contains scripts for host identification, opening-angle measurement, and
+  spectral-index analysis.
 
 ## Main Workflow
 
-### 1. Source Cropping
+### 1. Source Cutout Generation
 
-- [cut_source.py](/home/caojie/work/btrg_catalog/cut_source.py)
-  Read the MeerKLASS source catalog and FITS mosaics, then write one HDF5 file per mosaic with island-centered cutouts.
+[`cut_source.py`](cut_source.py) reads the MeerKLASS source catalog and FITS
+mosaics, and then writes island-centred cutouts to HDF5 files.
 
 ### 2. Candidate Preselection
 
-- [make_candidates.py](/home/caojie/work/btrg_catalog/make_candidates.py)
-  Compute connected-component and skeleton-based morphology features, then keep extended bent-tail-like candidates.
+[`make_candidates.py`](make_candidates.py) calculates connected-component,
+skeleton, and morphology features, and retains extended candidates with
+bent-tail-like structures.
 
 ### 3. Annotation Preparation
 
-- [export_png.py](/home/caojie/work/btrg_catalog/export_png.py)
-  Convert candidate cutouts into PNG images.
-- [select_demo.py](/home/caojie/work/btrg_catalog/select_demo.py)
-  Build a feature table and select a balanced annotation subset.
+- [`export_png.py`](export_png.py) converts candidate cutouts into PNG images.
+- [`select_demo.py`](select_demo.py) creates a feature table and selects a
+  subset for manual annotation.
 
-### 4. BT / nonBT Classification
+### 4. BT/non-BT Classification
 
-- [bentcls/train_compare.py](/home/caojie/work/btrg_catalog/bentcls/train_compare.py)
-  Train and compare multiple backbones such as ResNet18, EfficientNet-B0, and ConvNeXt-Tiny.
-- [bentcls/predict_h5.py](/home/caojie/work/btrg_catalog/bentcls/predict_h5.py)
-  Run single-model inference on candidate HDF5 groups.
-- [bentcls/predict_h5_topk.py](/home/caojie/work/btrg_catalog/bentcls/predict_h5_topk.py)
-  Keep the highest-scoring fraction of candidates.
-- [bentcls/predict_multi_models.py](/home/caojie/work/btrg_catalog/bentcls/predict_multi_models.py)
-  Run inference for multiple models and cross-match their candidate outputs.
+- [`bentcls/train_compare.py`](bentcls/train_compare.py) trains and compares
+  classifier backbones including ResNet-18, EfficientNet-B0, and
+  ConvNeXt-Tiny.
 
-The multi-model inference workflow is described in [predict_multi_models.md](/home/caojie/work/btrg_catalog/predict_multi_models.md).
+- [`bentcls/predict_h5.py`](bentcls/predict_h5.py) performs single-model
+  inference on candidate HDF5 groups.
+
+- [`bentcls/predict_h5_topk.py`](bentcls/predict_h5_topk.py) retains a
+  specified fraction of the highest-scoring candidates.
+
+- [`bentcls/predict_multi_models.py`](bentcls/predict_multi_models.py)
+  performs inference with multiple models and cross-matches their candidate
+  outputs.
 
 ### 5. Catalog Assembly
 
-- [out_catalog.py](/home/caojie/work/btrg_catalog/out_catalog.py)
-  Convert final HDF5 subsets into a FITS table for downstream catalog work.
+[`out_catalog.py`](out_catalog.py) converts the final selected HDF5 groups
+into a catalog table for subsequent analysis.
 
-### 6. Host Matching and AllWISE Enrichment
+### 6. Host Identification and AllWISE Cross-Matching
 
-- [val/findhost_new_catalog.py](/home/caojie/work/btrg_catalog/val/findhost_new_catalog.py)
-  Find host candidates from catalog RA/DEC by matching radio and WISE cutouts through WCS footprint checks.
-- [val/host.py](/home/caojie/work/btrg_catalog/val/host.py)
-  Create example WISE+radio host overlays.
-- [val/wise_download.py](/home/caojie/work/btrg_catalog/val/wise_download.py)
-  Download WISE FITS cutouts for host validation.
-- [wise-cross.py](/home/caojie/work/btrg_catalog/wise-cross.py)
-  Append AllWISE photometry and quality flags to the host-matched catalog.
+- [`val/findhost_new_catalog.py`](val/findhost_new_catalog.py) identifies host
+  candidates by comparing radio and WISE cutouts through WCS footprint
+  checks.
 
-### 7. Validation Products
+- [`val/host.py`](val/host.py) produces example WISE and radio overlays for
+  host-identification checks.
 
-- [val/OA_auto.py](/home/caojie/work/btrg_catalog/val/OA_auto.py)
-  Automatic opening-angle measurement using masks, skeletons, and host-guided or bend-guided C points.
-- [val/OA_plot.py](/home/caojie/work/btrg_catalog/val/OA_plot.py)
-  Generate OA visualizations for quality control and presentation.
-- [val/crop_bent_300.py](/home/caojie/work/btrg_catalog/val/crop_bent_300.py)
-  Produce radio cutouts for morphology and OA validation.
-- [val/crop_cube_sources.py](/home/caojie/work/btrg_catalog/val/crop_cube_sources.py)
-  Crop radio cubes for spectral-index analysis.
-- [val/spectral_index.py](/home/caojie/work/btrg_catalog/val/spectral_index.py)
-  Compute two-band spectral-index maps.
+- [`val/wise_download.py`](val/wise_download.py) downloads WISE FITS cutouts
+  used in host validation.
 
-## Setup
+- [`wise-cross.py`](wise-cross.py) appends AllWISE photometry and quality
+  flags to the host-matched catalog.
 
-Install dependencies with:
+### 7. Morphological and Spectral Validation
+
+- [`val/OA_auto.py`](val/OA_auto.py) performs automatic opening-angle
+  measurements using emission masks, skeletons, and host-guided or
+  bend-guided reference points.
+
+- [`val/OA_plot.py`](val/OA_plot.py) creates opening-angle visualisations for
+  quality control.
+
+- [`val/crop_bent_300.py`](val/crop_bent_300.py) produces radio cutouts for
+  morphology and opening-angle validation.
+
+- [`val/crop_cube_sources.py`](val/crop_cube_sources.py) crops radio-image
+  cubes for spectral-index analysis.
+
+- [`val/spectral_index.py`](val/spectral_index.py) calculates two-band
+  spectral-index maps.
+
+## Installation
+
+Install the required Python packages with:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Some scripts assume local HPC paths and MeerKLASS data locations. Before running them elsewhere, update the hard-coded input and output paths at the top of each script.
+## Configuration and Data Paths
 
-## Notes
+Some scripts contain input and output paths specific to the original
+high-performance computing environment.
 
-- This repository is a cleaned code snapshot of the BT catalog construction workflow.
-- Large data products and generated outputs remain outside version control by design.
+Before running the workflow on another system, users must update the relevant
+paths for:
 
-## Authors
+- MeerKLASS FITS mosaics;
+- source catalogs;
+- HDF5 cutout files;
+- model checkpoints;
+- output catalogs and validation products.
+
+The original MeerKLASS images and other large intermediate data products are
+not distributed with this software release.
+
+## Reproducibility Notes
+
+This repository is a cleaned software snapshot of the catalog-construction
+workflow used in the associated study.
+
+The repository preserves the main processing, classification, catalog
+assembly, and validation scripts. Large input data, intermediate products,
+trained model files, and generated catalog products remain outside version
+control by design.
+
+## Author
 
 - Jie Cao, Guangzhou University
 
 ## License
 
 This software is distributed under the MIT License. See the
-[LICENSE](LICENSE) file for details.
+[`LICENSE`](LICENSE) file for details.
 
 ## Citation
 
-If you use this software, please cite the archived version:
+When using this software, please cite the archived release:
 
-Cao, J. (2026). *btrg_catalog: MeerKLASS Bent-Tail Radio Galaxy
-Catalog Construction Workflow* (Version 1.0.0). Zenodo.
-https://doi.org/10.5281/zenodo.21760616
+> Cao, J. (2026). *btrg_catalog: MeerKLASS Bent-Tail Radio Galaxy Catalog
+> Construction Workflow* (Version 1.0.0). Zenodo.  
+> https://doi.org/10.5281/zenodo.21760616
 
-Citation metadata are also provided in the
-[CITATION.cff](CITATION.cff) file.
+Machine-readable citation metadata are provided in
+[`CITATION.cff`](CITATION.cff).

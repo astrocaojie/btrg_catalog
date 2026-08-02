@@ -185,7 +185,7 @@ When using this software, please cite the archived release:
 
 > Cao, J. (2026). *btrg_catalog: MeerKLASS Bent-Tail Radio Galaxy Catalog
 > Construction Workflow* (Version 1.0.0). Zenodo.  
-> https://doi.org/10.5281/zenodo.21760616
+> https://doi.org/10.5281/zenodo.21761008
 
 Machine-readable citation metadata are provided in
 [`CITATION.cff`](CITATION.cff).

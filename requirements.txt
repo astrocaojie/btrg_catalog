@@ -6,3 +6,11 @@ pyyaml
 h5py
 torch
 torchvision
+astropy
+astroquery
+scipy
+scikit-image
+matplotlib
+reproject
+requests
+scikit-learn

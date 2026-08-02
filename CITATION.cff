@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "btrg_catalog: MeerKLASS Bent-Tail Radio Galaxy Catalog Construction Workflow"
+abstract: >
+  This repository contains the core scripts, configuration files, and
+  documentation used to construct and validate a catalog of bent-tail
+  radio galaxies identified in the MeerKLASS survey.
+authors:
+  - family-names: "Cao"
+    given-names: "Jie"
+    affiliation: "Guangzhou University"
+type: software
+version: "1.0.0"
+date-released: "2026-08-02"
+doi: "10.5281/zenodo.21760616"
+repository-code: "https://github.com/astrocaojie/btrg_catalog"
+url: "https://github.com/astrocaojie/btrg_catalog"
+license: MIT
+keywords:
+  - radio astronomy
+  - bent-tail radio galaxies
+  - MeerKLASS
+  - radio galaxy classification
+  - source catalog
